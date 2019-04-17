@@ -18,6 +18,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using BackendGleb.Helpers;
 
 namespace BackendGleb
 {
@@ -41,7 +43,10 @@ namespace BackendGleb
 
 
             services.AddIdentity<DbUser, IdentityRole>()
-                .AddEntityFrameworkStores<EFContext>();
+                .AddEntityFrameworkStores<EFContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is the secret phrase"));
 
